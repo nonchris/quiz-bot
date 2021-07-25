@@ -1,4 +1,4 @@
-from typing import Union, Dict
+from typing import Union, Dict, List, Tuple
 
 import discord
 from discord.ext import commands
@@ -7,6 +7,7 @@ import dateparser
 
 from environment import PREFIX
 from quiz_mangement.quiz import Quiz
+from quiz_mangement.analyzer import Analyzer
 import utils.utils as ut
 
 
@@ -32,6 +33,7 @@ class QuizCommands(commands.Cog):
         self.bot = bot
         self.quizzes: Dict[discord.TextChannel, Quiz] = {}  # dict containing all running quizzes
 
+    # TODO make delta time dynamic entry in json?
     @commands.has_permissions(administrator=True)
     @commands.command("start", help="Start a new quiz in a channel.")
     async def init_quiz(self, ctx: commands.Context, *args):
@@ -64,7 +66,7 @@ class QuizCommands(commands.Cog):
         await self.send_question(ctx)
 
     @commands.has_permissions(administrator=True)
-    @commands.command("next",
+    @commands.command("next", aliases=["skip"],
                       help="Send the next question into the chat.\n There must be an active quiz in the same channel")
     async def send_question(self, ctx: commands.Context):
         """ Get and send next question if quiz exists in this channel"""
@@ -75,10 +77,15 @@ class QuizCommands(commands.Cog):
             await ctx.send(f"There is no quiz in this channel.\nUse `{PREFIX}start` to start a quiz.")
             return
 
+        # just a little handling if nobody answered the question
+        if current.current_question_idx > -1 and not current.correct_members[current.current_question_idx]:
+            await ctx.send("Seems like nobody answered that question - was it to hard? :eyes:\n"
+                           "Here is the next one, good luck!")
+
         question = current.get_next()  # get next question
 
         if question is None:
-            await ctx.send("All questions have been asked, I#m sorry :/")
+            await self.end_quiz(ctx)
             return
 
         await ctx.send(
@@ -93,11 +100,20 @@ class QuizCommands(commands.Cog):
     @commands.command("end", help="End a quiz manually")
     async def end_quiz(self, ctx: commands.Context):
         """ End a quiz, remove it from class dict """
-        if self.quizzes.get(ctx.channel, None):
-            self.quizzes.pop(ctx.channel)
-        await ctx.send("Quiz was finished")
+        if not self.quizzes.get(ctx.channel, None):
+            await ctx.send("There is no quiz to end")
 
-        # TODO process winner / statistics
+        ana = Analyzer(self.quizzes.pop(ctx.channel))
+        res = ana.get_result_as_tuples()
+
+        await ctx.send(
+            embed=ut.make_embed(
+                title="Finish!",
+                name="Here are the results:",
+                value=self.build_display_string(res),
+                color=ut.green
+            )
+        )
 
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message):
@@ -125,6 +141,12 @@ class QuizCommands(commands.Cog):
     def get_quiz(self, channel: discord.TextChannel) -> Union[Quiz, None]:
         """ Get the channels quiz if one is active """
         return self.quizzes.get(channel, None)
+
+    @staticmethod
+    def build_display_string(results: List[Tuple[discord.Member, int]]) -> str:
+        """ Build a string from result tuples """
+        strings = [f"{entry[0].mention}: {entry[1]} points" for entry in results]
+        return "\n".join(strings) if results else "No one participated..."
 
     @staticmethod
     async def process_answer(quiz: Quiz, message: discord.Message):
