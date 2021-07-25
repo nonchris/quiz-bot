@@ -21,7 +21,7 @@ class Quiz:
         self.answer_time = time.time()  # time when the current question was answered the first time
         self.delta_time = delta_time  # time until a question can't be answered after first correct answer
 
-        self.correct_members: Dict[int, List[discord.Member]] = {}  # keep track of all members that answered right
+        self.correct_members: Dict[int, List[discord.Member]] = {}  # all members that answered right, key: question_idx
 
     def get_next(self):
         """ Increase index counter by one, return new question. Return None if no questions are left"""

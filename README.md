@@ -10,14 +10,15 @@ A small discord bot for handling moderated quizzes.
     - the bot will wait for a configurable time until the question can't be answered
 * call next question with `next`
 * play until all questions asked or just as long as you want use `end` to end a quiz
+* bot displays scoreboard of quiz
 
-_To be implemented:_  
-* Statistics of quiz
+_To be implemented:_
 * Different checks for different answer types
 
 _Maybe one day:_
 * Selection from more quizzes  
 * Option for quizzes to be started by members without admin
+* Time based score calculation
 
 #### example quiz-file
 hardcoded path: `data/questions.json`, questions are modelled as json array.
