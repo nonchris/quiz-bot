@@ -18,20 +18,20 @@ def isolate_time(date: datetime) -> Union[datetime, None]:
     return date.replace(year=1970, month=1, day=1) if date else None
 
 
-def year_verification(guess: str, answer: str):
+def year_verification(guess: str, answer: str) -> bool:
     """ Verify guess and correct year """
     date = parse_datetime(guess)
     return str(date.year) == answer if date else False
 
 
-def date_verification(guess: str, answer: str):
+def date_verification(guess: str, answer: str) -> bool:
     """ Verify a date ignore time """
     answer_date = isolate_date(parse_datetime(answer))
     guess_date = isolate_date(parse_datetime(guess))
     return answer_date == guess_date
 
 
-def time_verification(guess: str, answer: str):
+def time_verification(guess: str, answer: str) -> bool:
     """ Verify a time, ignore date"""
     answer_date = isolate_time(parse_datetime(answer))
     guess_date = isolate_time(parse_datetime(guess))
