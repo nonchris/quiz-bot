@@ -170,8 +170,13 @@ class QuizCommands(commands.Cog):
                 )
 
             if quiz.is_question_open():  # second, third etc members are registered if question is still open
-                quiz.add_correct(message.author)
-                await message.add_reaction(u"\u2705")  # white checkmark
+                # check if member already answered that question
+                if not quiz.has_answered(message.author):
+                    quiz.add_correct(message.author)
+                    await message.add_reaction(u"\u2705")  # white checkmark
+
+                else:
+                    await message.reply(f"You already gave the right answer :)")
 
             else:  # to much time has passed - we don't want everybody to win by copying from the winner
                 await message.channel.send(

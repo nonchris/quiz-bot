@@ -43,6 +43,10 @@ class Quiz:
         """ Check if question was already answered """
         return True if self.correct_members[self.current_question_idx] else False
 
+    def has_answered(self, member: discord.Member):
+        """ If member has already answered True - to prevent double answers """
+        return member in self.correct_members[self.current_question_idx]
+
     def set_time(self):
         """ Set time when question was answered correct for the first time """
         self.answer_time = time.time()
