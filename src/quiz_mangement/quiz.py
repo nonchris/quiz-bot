@@ -1,7 +1,7 @@
 import json
 import time
 from dataclasses import dataclass
-from typing import Dict, List
+from typing import Dict, List, Union
 
 import discord
 
@@ -16,14 +16,14 @@ class Quiz:
         self.len_questions = len(self.questions)
 
         self.current_question_idx: int = -1  # index pointing to current question in list
-        self.current_question = {}  # question that is currently asked, here for convenience
+        self.current_question: Dict[str, str] = {}  # question that is currently asked, here for convenience
 
         self.answer_time = time.time()  # time when the current question was answered the first time
         self.delta_time = delta_time  # time until a question can't be answered after first correct answer
 
         self.correct_members: Dict[int, List[discord.Member]] = {}  # all members that answered right, key: question_idx
 
-    def get_next(self):
+    def get_next(self) -> Union[Dict[str, str], None]:
         """ Increase index counter by one, return new question. Return None if no questions are left"""
         self.current_question_idx += 1
         self.correct_members[self.current_question_idx] = []
@@ -32,18 +32,18 @@ class Quiz:
         self.current_question = self.questions[self.current_question_idx]
         return self.current_question
 
-    def get_current(self):
+    def get_current(self) -> Dict[str, str]:
         return self.current_question
 
     def add_correct(self, member: discord.Member):
         """ Add member with correct answer to dict """
         self.correct_members[self.current_question_idx].append(member)
 
-    def is_answered(self):
+    def is_answered(self) -> bool:
         """ Check if question was already answered """
         return True if self.correct_members[self.current_question_idx] else False
 
-    def has_answered(self, member: discord.Member):
+    def has_answered(self, member: discord.Member) -> bool:
         """ If member has already answered True - to prevent double answers """
         return member in self.correct_members[self.current_question_idx]
 
@@ -51,11 +51,10 @@ class Quiz:
         """ Set time when question was answered correct for the first time """
         self.answer_time = time.time()
 
-    def is_question_open(self):
+    def is_question_open(self) -> bool:
         """ Check if time for a correct answer is left """
         delta = time.time() - self.answer_time
-        if delta < self.delta_time:
-            return True
+        return delta < self.delta_time
 
     @staticmethod
     def __load_questions(path="data/questions.json"):
