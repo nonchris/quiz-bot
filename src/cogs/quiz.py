@@ -3,10 +3,9 @@ from typing import Union, Dict, List, Tuple
 import discord
 from discord.ext import commands
 
-import dateparser
-
 from environment import PREFIX
 from quiz_mangement.quiz import Quiz
+import quiz_mangement.verificators as verify
 from quiz_mangement.analyzer import Analyzer
 import utils.utils as ut
 
@@ -18,10 +17,6 @@ answer_formats = {
     "year": "Allowed format: 2002 | 02",
     "date": "Allowed formats: Most known formats like dd.mm.yy | dd/mm/yyyy"
 }
-
-
-def parse_date(date_string: str):
-    return dateparser.parse(date_string, languages=["de", "en"])
 
 
 class QuizCommands(commands.Cog):
@@ -154,8 +149,24 @@ class QuizCommands(commands.Cog):
 
         question: dict = quiz.get_current()
 
-        # validate message with answer
-        if message.content == question["a"]:
+        # all have the same signature: (guess: str, answer: str)
+        validation_switch = {
+            "year": verify.year_verification,
+            "date": verify.date_verification,
+            "time": verify.time_verification,
+            "word": verify.word_match_verification,
+            # number verification has a different signature
+        }
+
+        # get validation function and execute
+        if question["t"] == "integer":
+            is_correct = verify.int_verification(message.content, question["a"], precision=question["tolerance"])
+        else:
+            verify_fn = validation_switch[question["t"]]
+            is_correct = verify_fn(message.content, question["a"])
+
+        # if answer was correct
+        if is_correct:
 
             if not quiz.is_answered():
 
