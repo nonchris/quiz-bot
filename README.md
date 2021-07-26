@@ -25,16 +25,29 @@ hardcoded path: `data/questions.json`, questions are modelled as json array.
 ```json
 [
   {
-    "q": "Question", 
-    "d": "Additional description",
-    "a": "Answer",
-    "t": "type, eg data or number"
+    "q": "In which year was python published?", 
+    "d": "Name it's first appearance",
+    "a": "1991",
+    "t": "year"
   },
   {
-    "q": "Next question..."
+    "q": "Distance from earth to moon?",
+    "d": "Rounded to thousands",
+    "a": "384400",
+    "t": "integer",
+    "tolerance": "3"
+    
   }
 ]
 ```
+##### Supported question types:
+* year (just compare the year of a date)
+* date (compare the whole date, except time)
+* time (compare time, dates ignored)
+* word (simply match two words, in lowercase)
+* integer (compare two integers with given precision)
+
+_integer comparison allows for an extra tolerance parameter in the json_
     
 
 #### setup
@@ -45,7 +58,7 @@ hardcoded path: `data/questions.json`, questions are modelled as json array.
 #### optional env variables
 | parameter |  description |
 | ------ |  ------ |
-| `export Prefix="q!"`  | Command prefix |
+| `export PREFIX="q!"`  | Command prefix |
 | `export LANGUAGE="en"`  | Language dates are processed in |
 | `export VERSION="unknown"` | Version the bot is running |
 | `export OWNER_NAME="unknwon"` | Name of the bot owner |
