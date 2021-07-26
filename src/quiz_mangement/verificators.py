@@ -54,3 +54,21 @@ def time_verification(guess: str, answer: str) -> bool:
     guess_date = isolate_time(parse_datetime(guess))
     return answer_date == guess_date
 
+
+def word_in_guess_verification(guess: str, answer: str) -> bool:
+    """ Verify if word is in a longer string """
+    return guess.lower().strip() in answer.lower()
+
+
+def word_match_verification(guess: str, answer: str) -> bool:
+    """ Verify if words match, non case sensitive """
+    return guess.lower().strip() == answer.lower()
+
+
+def int_verification(guess: str, answer: str, precision=0) -> bool:
+    """ Compare two numbers with a specified precision, does not support floating point """
+    precision = int(precision)  # convert string to int
+    guess = guess.replace(".", "").replace(",", "").replace(" ", "")  # ensure that eg 60.000 is converted to 60000
+    guess = guess[:len(guess) - precision] + "0" * precision
+    answer = answer[:len(answer) - precision] + "0" * precision
+    return guess == answer
