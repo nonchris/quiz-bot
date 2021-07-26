@@ -46,6 +46,7 @@ hardcoded path: `data/questions.json`, questions are modelled as json array.
 | parameter |  description |
 | ------ |  ------ |
 | `export Prefix="q!"`  | Command prefix |
+| `export LANGUAGE="en"`  | Language dates are processed in |
 | `export VERSION="unknown"` | Version the bot is running |
 | `export OWNER_NAME="unknwon"` | Name of the bot owner |
 | `export OWNER_ID="100000000000000000"` | ID of the bot owner |

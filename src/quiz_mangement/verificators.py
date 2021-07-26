@@ -3,9 +3,26 @@ from typing import Union
 
 import dateparser
 
+from environment import LANGUAGE
 
-def parse_datetime(date_string: str) -> Union[datetime, None]:
-    return dateparser.parse(date_string, languages=["de", "en"])
+
+def parse_datetime(date_string: str, *extra_languages, use_default_lang=True) -> Union[datetime, None]:
+    """
+    parse datetime using dateparser
+
+    :param date_string: the string to parse a date from
+    :param extra_languages: all languages that shall be used to detect a date
+    :param use_default_lang: if set default from environment shall be used
+
+    :return: datetime object if exists else None
+    """
+
+    languages = [LANGUAGE] if use_default_lang or not extra_languages else []
+
+    if extra_languages:
+        languages.extend(list(extra_languages))
+
+    return dateparser.parse(date_string, languages=languages)
 
 
 def isolate_date(date: datetime) -> Union[datetime, None]:
