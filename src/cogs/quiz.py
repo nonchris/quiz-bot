@@ -92,6 +92,24 @@ class QuizCommands(commands.Cog):
             )
         )
 
+    @commands.has_permissions(administrator=True)
+    @commands.command("points", help="Display current points")
+    async def show_points(self, ctx: commands.Context):
+        """ Show current points """
+        if not self.quizzes.get(ctx.channel, None):
+            await ctx.send("There is no quiz running in this channel")
+
+        ana = Analyzer(self.quizzes[ctx.channel])
+        res = ana.get_result_as_tuples()
+
+        await ctx.send(
+            embed=ut.make_embed(
+                title="Current points",
+                name="Intermediate result:",
+                value=self.build_display_string(res),
+                color=ut.blue_light
+            )
+        )
 
     @commands.has_permissions(administrator=True)
     @commands.command("end", help="End a quiz manually")
