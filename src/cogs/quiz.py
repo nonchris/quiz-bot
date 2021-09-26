@@ -171,16 +171,17 @@ class QuizCommands(commands.Cog):
             if not quiz.is_answered():
 
                 quiz.set_time()  # question was answered, set time to handle time passed since first right answer
+                quiz.add_correct(message.author)  # add user who first answered right
 
                 await message.channel.send(
                     embed=ut.make_embed(
                         name="First!",
-                        value=f"Hey, {message.author.mention} your answer is correct!",
+                        value=f"Hey, {message.author.mention} your answer '{message.content}' is correct!",
                         color=ut.green
                     )
                 )
 
-            if quiz.is_question_open():  # second, third etc members are registered if question is still open
+            elif quiz.is_question_open():  # second, third etc members are registered if question is still open
                 # check if member already answered that question
                 if not quiz.has_answered(message.author):
                     quiz.add_correct(message.author)
