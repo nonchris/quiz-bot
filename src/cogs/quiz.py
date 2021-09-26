@@ -3,7 +3,7 @@ from typing import Union, Dict, List, Tuple
 import discord
 from discord.ext import commands
 
-from environment import PREFIX, QUIZ_FILE
+from environment import PREFIX, QUIZ_FILE, ALLOWED_DELTA
 from quiz_mangement.quiz import Quiz
 import quiz_mangement.verificators as verify
 from quiz_mangement.analyzer import Analyzer
@@ -48,7 +48,7 @@ class QuizCommands(commands.Cog):
             try:
                 delta_time = float(args[0])
             except TypeError:
-                pass
+                delta_time = ALLOWED_DELTA
 
         # load new quiz
         if delta_time:  # with custom delta time

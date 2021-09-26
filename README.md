@@ -64,6 +64,7 @@ _integer comparison allows for an extra tolerance parameter in the json_
 | `export VERSION="unknown"` | Version the bot is running |
 | `export OWNER_NAME="unknwon"` | Name of the bot owner |
 | `export OWNER_ID="100000000000000000"` | ID of the bot owner |
+| `export ALLOWED_DELTA="2.0"`| Time (seconds) the questions stay open after a question was answered |  
 
 The shown values are the default values that will be loaded if nothing else is specified.
 
