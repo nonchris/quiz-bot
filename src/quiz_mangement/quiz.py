@@ -7,6 +7,9 @@ import discord
 
 
 # @dataclass(frozen=True, order=True)
+from environment import logger
+
+
 class Quiz:
     def __init__(self, channel: discord.TextChannel, path="data/questions.json", delta_time=2.0):
         self.channel = channel  # chanel this quiz is running in
@@ -37,6 +40,7 @@ class Quiz:
 
     def add_correct(self, member: discord.Member):
         """ Add member with correct answer to dict """
+        logger.info(f"{member.display_name} ({member.id}) is added for question {self.current_question_idx}")
         self.correct_members[self.current_question_idx].append(member)
 
     def is_answered(self) -> bool:
