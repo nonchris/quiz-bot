@@ -193,10 +193,10 @@ class QuizCommands(commands.Cog):
                 quiz.set_time()  # question was answered, set time to handle time passed since first right answer
                 quiz.add_correct(message.author)  # add user who first answered right
 
-                await message.channel.send(
+                await message.reply(
                     embed=ut.make_embed(
                         name="First!",
-                        value=f"Hey, {message.author.mention} your answer '{message.content}' is correct!",
+                        value=f"Hey, {message.author.mention} your answer is correct!",
                         color=ut.green
                     )
                 )
