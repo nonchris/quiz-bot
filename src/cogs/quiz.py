@@ -83,10 +83,11 @@ class QuizCommands(commands.Cog):
             await self.end_quiz(ctx)
             return
 
+        desc = question["d"]  # optional description
         await ctx.send(
             embed=ut.make_embed(
                 name=question["q"],  # question
-                value=question["d"],  # additional description
+                value=desc if desc else "‌",  # additional description
                 footer=f"Question {current.current_question_idx + 1} of {len(current.questions)}",
                 color=ut.blue_light
             )
