@@ -129,7 +129,7 @@ class QuizCommands(commands.Cog):
         quiz = self.get_quiz(reaction.message.channel)
 
         # validate that it's an admin, a quiz is running and the emoji is correct
-        if quiz and perms.administrator and reaction.emoji == u"\u2705":
+        if quiz and perms.administrator and reaction.emoji == u"\u2705" and member.id != self.bot.user.id:
             quiz.add_correct(reaction.message.author)  # add member to list of members with correct answer
             await reaction.message.add_reaction(u"\u2705")  # send feedback
 
