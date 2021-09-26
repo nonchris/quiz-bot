@@ -31,3 +31,4 @@ VERSION = load_env("VERSION", "unknown")  # version of the bot
 LANGUAGE = load_env("LANGUAGE", "en")  # language for date parsing
 OWNER_NAME = load_env("OWNER_NAME", "unknown")   # owner name with tag e.g. pi#3141
 OWNER_ID = int(load_env("OWNER_ID", "100000000000000000"))  # discord id of the owner
+QUIZ_FILE = load_env("QUIZ_FILE", "data/questions.json")

@@ -59,6 +59,7 @@ _integer comparison allows for an extra tolerance parameter in the json_
 | parameter |  description |
 | ------ |  ------ |
 | `export PREFIX="q!"`  | Command prefix |
+| `export QUIZ_FILE="data/questions.json"`  | Path the quiz file is located |
 | `export LANGUAGE="en"`  | Language dates are processed in |
 | `export VERSION="unknown"` | Version the bot is running |
 | `export OWNER_NAME="unknwon"` | Name of the bot owner |

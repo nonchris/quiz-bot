@@ -3,7 +3,7 @@ from typing import Union, Dict, List, Tuple
 import discord
 from discord.ext import commands
 
-from environment import PREFIX
+from environment import PREFIX, QUIZ_FILE
 from quiz_mangement.quiz import Quiz
 import quiz_mangement.verificators as verify
 from quiz_mangement.analyzer import Analyzer
@@ -52,9 +52,9 @@ class QuizCommands(commands.Cog):
 
         # load new quiz
         if delta_time:  # with custom delta time
-            quiz = Quiz(ctx.channel, path="data/questions.json", delta_time=delta_time)
+            quiz = Quiz(ctx.channel, path=QUIZ_FILE, delta_time=delta_time)
         else:
-            quiz = Quiz(ctx.channel, path="data/questions.json")
+            quiz = Quiz(ctx.channel, path=QUIZ_FILE)
 
         self.quizzes[ctx.channel] = quiz  # register quiz for channel
 
