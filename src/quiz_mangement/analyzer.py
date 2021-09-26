@@ -44,7 +44,7 @@ class Analyzer:
 
             for i, member in enumerate(members):
                 # add scored points onto members score in dict
-                member_score_dict[member] = self.get_points_for_position(i, default=10)
+                member_score_dict[member] += self.get_points_for_position(i, default=10)
 
         return member_score_dict
 
