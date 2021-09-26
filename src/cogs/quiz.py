@@ -160,7 +160,7 @@ class QuizCommands(commands.Cog):
 
         # get validation function and execute
         if question["t"] == "integer":
-            is_correct = verify.int_verification(message.content, question["a"], precision=question["tolerance"])
+            is_correct = verify.int_verification(message.content, question["a"], precision=question.get("tolerance", "0"))
         else:
             verify_fn = validation_switch[question["t"]]
             is_correct = verify_fn(message.content, question["a"])
