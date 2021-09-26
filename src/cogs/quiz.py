@@ -92,6 +92,8 @@ class QuizCommands(commands.Cog):
             )
         )
 
+
+    @commands.has_permissions(administrator=True)
     @commands.command("end", help="End a quiz manually")
     async def end_quiz(self, ctx: commands.Context):
         """ End a quiz, remove it from class dict """
