@@ -55,16 +55,18 @@ _integer comparison allows for an extra tolerance parameter in the json_
 `export TOKEN="your-key"`  
 `python3 main.py`
 
-#### optional env variables
-| parameter |  description |
-| ------ |  ------ |
-| `export PREFIX="q!"`  | Command prefix |
-| `export QUESTIONS="data/questions.json"`  | Path the quiz file is located |
-| `export LANGUAGE="en"`  | Language dates are processed in |
-| `export VERSION="unknown"` | Version the bot is running |
-| `export OWNER_NAME="unknwon"` | Name of the bot owner |
-| `export OWNER_ID="100000000000000000"` | ID of the bot owner |
-| `export ALLOWED_DELTA="2.0"`| Time (seconds) the questions stay open after a question was answered |  
+#### optional parameters
+| parameter |  description | commandline argument |  
+| ------ |  ------ |  ------ |
+| `PREFIX="q!"`  | Command prefix | `-t` `--token` |
+| `QUESTIONS="data/questions.json"`  | Path the quiz file is located | `-q` `--questions` |
+| `LANGUAGE="en"`  | Language dates are processed in | `-l` `--language` |
+| `VERSION="unknown"` | Version the bot is running | `-v` `--version` |
+| `OWNER_NAME="unknwon"` | Name of the bot owner | `-n` `--owner_name` |
+| `OWNER_ID="100000000000000000"` | ID of the bot owner | `-i` `--owner_id` |
+| `ALLOWED_DELTA="2.0"`| Time (seconds) the questions stay open after a question was answered | `-d` `--allowed_delta` |  
+
+You can configure those parameters using env-variables or console-args.  
 
 The shown values are the default values that will be loaded if nothing else is specified.
 
