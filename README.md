@@ -51,9 +51,9 @@ _integer comparison allows for an extra tolerance parameter in the json_
     
 
 #### setup
-`pip install -r requirements.txt`  
+`pip install .` or `pip install -e .` if you want to edit the code  
 `export TOKEN="your-key"`  
-`python3 main.py`
+`quiz-bot`
 
 #### optional parameters
 | parameter |  description | commandline argument |  
@@ -67,7 +67,6 @@ _integer comparison allows for an extra tolerance parameter in the json_
 | `ALLOWED_DELTA="2.0"`| Time (seconds) the questions stay open after a question was answered | `-d` `--allowed_delta` |  
 
 You can configure those parameters using env-variables or console-args.  
+*Args set from console will replace args that are also set as env-variable!*
 
 The shown values are the default values that will be loaded if nothing else is specified.
-
-

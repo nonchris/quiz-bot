@@ -6,8 +6,8 @@ from discord.ext import commands
 
 # setup of logging and env-vars
 # logging must be initialized before environment, to enable logging in environment
-from log_setup import logger
-from environment import PREFIX, TOKEN
+from .log_setup import logger
+from .environment import PREFIX, TOKEN
 
 """
 This bot is based on a template by nonchris
@@ -38,16 +38,24 @@ async def on_ready():
     await bot.change_presence(
         activity=discord.Activity(type=discord.ActivityType.watching, name=f"{PREFIX}help"))
 
-# LOADING Extensions
-bot.remove_command('help')  # unload default help message
-initial_extensions = [
-    'cogs.misc',
-    'cogs.help',
-    'cogs.quiz'
-]
+    # LOADING Extensions
+    bot.remove_command('help')  # unload default help message
+    initial_extensions = [
+        '.cogs.misc',
+        '.cogs.help',
+        '.cogs.quiz'
+    ]
 
-if __name__ == '__main__':
     for extension in initial_extensions:
-        bot.load_extension(extension)
+        bot.load_extension(extension, package=__package__)
 
-    bot.run(TOKEN)
+
+def start_bot(token=None):
+    """ Start the bot, takes token, uses token from env if none is given """
+
+    if token:
+        bot.run(token)
+    if TOKEN:
+        bot.run(TOKEN)
+    else:
+        logger.error("No token was given! - Exiting")

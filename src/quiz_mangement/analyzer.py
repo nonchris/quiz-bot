@@ -2,7 +2,7 @@ from typing import List, Dict, Tuple
 
 import discord
 
-from quiz_mangement.quiz import Quiz
+from ..quiz_mangement.quiz import Quiz
 
 
 class Analyzer:

@@ -3,11 +3,11 @@ from typing import Union, Dict, List, Tuple
 import discord
 from discord.ext import commands
 
-from environment import PREFIX, QUIZ_FILE, ALLOWED_DELTA
-from quiz_mangement.quiz import Quiz
-import quiz_mangement.verificators as verify
-from quiz_mangement.analyzer import Analyzer
-import utils.utils as ut
+from ..environment import PREFIX, QUIZ_FILE, ALLOWED_DELTA
+from ..quiz_mangement.quiz import Quiz
+from ..quiz_mangement import verificators as verify
+from ..quiz_mangement.analyzer import Analyzer
+from ..utils import utils as ut
 
 
 # TODO finish this

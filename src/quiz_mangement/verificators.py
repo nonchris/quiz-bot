@@ -3,7 +3,7 @@ from typing import Union
 
 import dateparser
 
-from environment import LANGUAGE
+from ..environment import LANGUAGE
 
 
 def parse_datetime(date_string: str, *extra_languages, use_default_lang=True) -> Union[datetime, None]:

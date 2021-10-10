@@ -7,7 +7,7 @@ import discord
 
 
 # @dataclass(frozen=True, order=True)
-from environment import logger
+from ..environment import logger
 
 
 class Quiz:
